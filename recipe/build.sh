@@ -2,8 +2,16 @@
 
 set -o xtrace -o nounset -o pipefail -o errexit
 
-make
-make install prefix=${PREFIX}
+if [[ ${build_platform} == ${target_platform} ]]; then
+    go build -buildmode=pie -trimpath -o=${PREFIX}/bin/repocutter -ldflags="-s -w" ./cutter
+    go build -buildmode=pie -trimpath -o=${PREFIX}/bin/repomapper -ldflags="-s -w" ./mapper
+    go build -buildmode=pie -trimpath -o=${PREFIX}/bin/reposurgeon -ldflags="-s -w" ./surgeon
+    go build -buildmode=pie -trimpath -o=${PREFIX}/bin/repotool -ldflags="-s -w" ./tool
+else
+    make
+    make install prefix=${PREFIX}
+fi
+
 go-licenses save ./cutter --save_path=license-files_repocutter --ignore github.com/termie/go-shutil
 go-licenses save ./mapper --save_path=license-files_repomapper --ignore github.com/termie/go-shutil
 go-licenses save ./surgeon --save_path=license-files_reposurgeon --ignore github.com/termie/go-shutil
