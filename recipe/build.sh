@@ -2,11 +2,12 @@
 
 set -o xtrace -o nounset -o pipefail -o errexit
 
-if [[ ${build_platform} == ${target_platform} ]]; then
-    go build -buildmode=pie -trimpath -o=${PREFIX}/bin/repocutter -ldflags="-s -w" ./cutter
-    go build -buildmode=pie -trimpath -o=${PREFIX}/bin/repomapper -ldflags="-s -w" ./mapper
-    go build -buildmode=pie -trimpath -o=${PREFIX}/bin/reposurgeon -ldflags="-s -w" ./surgeon
-    go build -buildmode=pie -trimpath -o=${PREFIX}/bin/repotool -ldflags="-s -w" ./tool
+if [[ ${build_platform} != ${target_platform} ]]; then
+    make reposurgeon
+    install -m 755 repocutter ${PREFIX}/bin/repocutter
+    install -m 755 repomapper ${PREFIX}/bin/repomapper
+    install -m 755 reposurgeon ${PREFIX}/bin/reposurgeon
+    install -m 755 repotool ${PREFIX}/bin/repotool
 else
     make
     make install prefix=${PREFIX}
