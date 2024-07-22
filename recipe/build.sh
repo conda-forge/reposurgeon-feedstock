@@ -4,6 +4,7 @@ set -o xtrace -o nounset -o pipefail -o errexit
 
 if [[ ${build_platform} != ${target_platform} ]]; then
     make reposurgeon
+    mkdir -p ${PREFIX}/bin
     install -m 755 repocutter ${PREFIX}/bin/repocutter
     install -m 755 repomapper ${PREFIX}/bin/repomapper
     install -m 755 reposurgeon ${PREFIX}/bin/reposurgeon
