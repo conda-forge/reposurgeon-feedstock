@@ -1,32 +1,33 @@
-{% set name = "reposurgeon" %}
-{% set version = "5.3" %}
+schema_version: 1
+
+context:
+  version: 5.3
 
 package:
-  name: {{ name|lower }}
-  version: {{ version }}
+  name: reposurgeon
+  version: ${{ version }}
 
 source:
-  url: https://gitlab.com/esr/{{ name }}/-/archive/{{ version }}/reposurgeon-{{ version }}.tar.gz
+  url: https://gitlab.com/esr/reposurgeon/-/archive/${{ version }}/reposurgeon-${{ version }}.tar.gz
   sha256: a13e758e6bba5f4d17cdfa0ad8956bb864f336ba248b175353f741c3e5d3b089
 
 build:
-  number: 0
-  skip: true  # [win]
+  number: 1
+  skip: win
 
 requirements:
   build:
-    - {{ compiler('go-nocgo') }}
+    - ${{ compiler('go-nocgo') }}
     - asciidoctor
     - go-licenses
     - git
     - make
 
-test:
-  commands:
-    - {{ name }} --help
+tests:
+  - script:
+      - reposurgeon --help
 
 about:
-  home: http://www.catb.org/esr/reposurgeon
   license: BSD-2-Clause
   license_file:
     - COPYING
@@ -35,7 +36,8 @@ about:
     - license-files_reposurgeon/
     - license-files_repotool/
   summary: Edit version-control repository history
-  dev_url: https://gitlab.com/esr/{{ name }}
+  homepage: http://www.catb.org/esr/reposurgeon
+  repository: https://gitlab.com/esr/reposurgeon
 
 extra:
   recipe-maintainers:
