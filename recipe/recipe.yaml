@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: "5.9"
+  version: "5.10"
 
 package:
   name: reposurgeon
@@ -9,7 +9,7 @@ package:
 
 source:
   url: https://gitlab.com/esr/reposurgeon/-/archive/${{ version }}/reposurgeon-${{ version }}.tar.gz
-  sha256: f1b2c8f76bfaf6bfe19a625bb14c5e4c9a494c17f4591bdbc6c7796226d7365b
+  sha256: f001d1e2b9c54797f9a3f84fb5d55ef9113a53c645d7bdb617a2ac1de3bb0ed5
 
 build:
   number: 0
